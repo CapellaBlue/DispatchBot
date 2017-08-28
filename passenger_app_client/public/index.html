@@ -56,7 +56,7 @@
 
    <!-- Edit -->
    <section ng-show="ctrl.needToEdit">
-      <h1>Update Your Information?</h1>
+      <h1>Update away:</h1>
       <form name="updateInfo" ng-submit="ctrl.update(ctrl.info.id, updateInfo.$valid)" novalidate>
          <p>Full Name:<br> <input ng-model="ctrl.info.name" type="text" name="name" placeholder="First &amp; Last Name" ng-minlength="2" required><span ng-show="updateInfo.name.$invalid && !updateInfo.name.$pristine && updateInfo.name.$touched" style="color:red">*Please Enter a valid first and last name.</span></p>
 
