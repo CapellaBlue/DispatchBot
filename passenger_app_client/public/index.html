@@ -1,15 +1,77 @@
 <!DOCTYPE html>
 <html ng-app='passengerRegistration'>
 <head>
-    <meta charset="utf-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
+   <meta charset="utf-8">
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+   <script type="text/javascript" src="js/app.js"></script>
 
-    <title>Passenger Registration</title>
+   <title>Passenger Registration</title>
 </head>
 <body ng-controller="mainController as ctrl" >
-{{2+2}}
-{{ctrl.message}}
+
+   <!-- Intro Page -->
+   <section ng-hide="ctrl.searched">
+      <h1>Let's Begin.</h1>
+      <form name="passengerInfo" ng-submit="ctrl.search(passengerInfo.$valid)" novalidate>
+         <!-- Search for Name and Social -->
+         <p>Full Name:<br> <input ng-model="ctrl.info.name" type="text" name="name" placeholder="First &amp; Last Name" ng-minlength="2" required><span ng-show="passengerInfo.name.$invalid && !passengerInfo.name.$pristine && passengerInfo.name.$touched" style="color:red">*Please Enter a valid first and last name.</span></p>
+
+         <p>Social Security:<br> <input ng-model="ctrl.info.social" type="text" name="social" placeholder="xxx-xx-xxxx" ng-minlength="9" required><span ng-show="passengerInfo.social.$invalid && !passengerInfo.social.$pristine && passengerInfo.social.$touched" style="color:red">*Please Enter a valid social security number.</span></p>
+
+         <input type="submit" name="Search" value="Search" ng-disabled="passengerInfo.$invalid"><br>
+      </form>
+      <div ng-show="ctrl.retry">
+         <p style="color:red">*The social security entered matches an existing user. Please check your entries and try again.</p>
+      </div>
+
+   </section>
+
+   <!-- Registration if Search returns nothing-->
+
+   <section ng-show="ctrl.notRegistered">
+      <h1>Great! Finish up the registration:</h1>
+      <p>Name:<br> {{ctrl.info.name}}</p>
+      <p>Social Security:<br> {{ctrl.info.social}}</p>
+
+      <form name="passengerRegistration" ng-submit="ctrl.register(passengerRegistration.$valid)" novalidate>
+         <p>Address:<br> <input ng-model="ctrl.info.address" type="text" name="address" placeholder="Address, City, State, &amp; Zipcode" ng-minlength="10" required><span ng-show="passengerRegistration.address.$invalid && !passengerRegistration.address.$pristine && passengerRegistration.address.$touched" style="color:red">*Please Enter a valid address.</span></p>
+
+         <p>Phone:<br> <input ng-model="ctrl.info.phone" type="text" name="phone" placeholder="xxx-xxx-xxxx" ng-minlength="9" ng-maxlength="14"required><span ng-show="passengerRegistration.phone.$invalid && !passengerRegistration.phone.$pristine && passengerRegistration.phone.$touched" style="color:red">*Please Enter a valid phone number.</span></p>
+
+         <input type="submit" value="Save" ng-disabled="passengerRegistration.$invalid">
+      </form>
+   </section>
+
+
+   <!-- Show -->
+   <section ng-show="ctrl.displayInfo" >
+      <h1>We've got you! Here's your <span ng-show="ctrl.updated">(updated) </span>information:</h1>
+      <p>Name:<br> {{ctrl.info.name}}</p>
+      <p>Social Security:<br> {{ctrl.info.social}}</p>
+      <p>Address:<br> {{ctrl.info.address}}</p>
+      <p>Phone:<br> {{ctrl.info.phone}}</p>
+
+      <button ng-click="ctrl.showEdit()">I need to edit my information</button>
+   </section>
+
+   <!-- Edit -->
+   <section ng-show="ctrl.needToEdit">
+      <h1>Update Your Information?</h1>
+      <form name="updateInfo" ng-submit="ctrl.update(ctrl.info.id, updateInfo.$valid)" novalidate>
+         <p>Full Name:<br> <input ng-model="ctrl.info.name" type="text" name="name" placeholder="First &amp; Last Name" ng-minlength="2" required><span ng-show="updateInfo.name.$invalid && !updateInfo.name.$pristine && updateInfo.name.$touched" style="color:red">*Please Enter a valid first and last name.</span></p>
+
+         <p>Social Security:<br> <input ng-model="ctrl.info.social" type="text" name="social" placeholder="xxx-xx-xxxx" ng-minlength="9" ng-maxlength="11" required><span ng-show="updateInfo.social.$invalid && !updateInfo.social.$pristine && updateInfo.social.$touched" style="color:red">*Please Enter a valid social security number.</span></p></p>
+
+         <p>Address:<br> <input ng-model="ctrl.info.address" type="text" name="address" placeholder="Address, City, State, &amp; zipcode" required><span ng-show="updateInfo.address.$invalid && !updateInfo.address.$pristine && updateInfo.address.$touched" style="color:red">*Please Enter a valid address.</span></p>
+
+         <p>Phone:<br> <input ng-model="ctrl.info.phone" type="text" name="phone" placeholder="xxx-xxx-xxxx" ng-minlength="9" ng-maxlength="14" required><span ng-show="updateInfo.social.$invalid && !updateInfo.phone.$pristine&& updateInfo.phone.$touched" style="color:red">*Please Enter a valid phone number.</span></p>
+
+         <input type="submit" ng-disabled="updateInfo.$invalid"><br>
+      </form>
+   </section>
+   <button ng-show="ctrl.searched" type="button" name="button" ng-click="ctrl.reset()">Start Over</button>
+
+
 
 
 </body>
