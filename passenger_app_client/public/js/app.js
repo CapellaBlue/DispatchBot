@@ -4,9 +4,10 @@ console.log("frontend passenger app.js");
 
 var app = angular.module('passengerRegistration', []);
 
-app.controller('mainController', ['$http', function($http){
+app.controller('mainController', ['$scope', '$http', function($scope, $http){
 
    this.message = "angular functioning~";
+   console.log(this.message);
    this.notRegistered = false;
    this.searched;
    this.found;
@@ -16,6 +17,9 @@ app.controller('mainController', ['$http', function($http){
    this.info = {};
    this.notValid = false;
 
+   // this.test = function(){
+   //    return "hello";
+   // };
    ////////////////////////////////////////
    //search()
    ////////////////////////////////////////
@@ -24,8 +28,8 @@ app.controller('mainController', ['$http', function($http){
       if(valid){
          //remove all dashes from social
          var social = this.info.social;
-         console.log(social);
          social = social.replace(/-/g, "");
+
          // Make search input name lowercase
          var name = this.info.name;
          name = name.toLowerCase();
@@ -57,7 +61,7 @@ app.controller('mainController', ['$http', function($http){
                   this.info.social = dbSocial;
                   this.info.address = response.data.users[i].address;
                   this.info.phone = response.data.users[i].phone;
-                  return;
+                  return "yes";
                } else if(i == response.data.users.length - 1 && dbSocial.replace(/-/g, "") != social){
                   // If no match, show registration form
                   console.log("not a match:(");
@@ -71,6 +75,7 @@ app.controller('mainController', ['$http', function($http){
          }.bind(this));
       } else {
          console.log("not valid");
+         return 'boo';
       }
 
    };
