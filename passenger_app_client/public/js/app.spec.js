@@ -59,6 +59,16 @@ describe('Testing mainController', function(){
 
       expect(controller.social).toEqual('123121234');
    });
-   
+
+   it('removes reduces this.name characters to lowercase', function(){
+      var $scope = {};
+      var controller = $controller('mainController', { $scope: $scope });
+      controller.info.social = '123-12-1234';
+      controller.info.name = 'Amanda Test';
+      controller.search(true);
+      // $httpBackend.flush();
+
+      expect(controller.name).toEqual('amanda test');
+   });
 
 });
