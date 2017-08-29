@@ -3,11 +3,11 @@ Passenger Registration Application
 
 An anonymous user can register their name, address, phone number, and social security number. This information is saved to the database that is accessed by other applications. For this reason, the backend API is built with Ruby/Rails. It allows my backend API to serve up JSON data on its own while frontend APIs consume that information.
 
-For the database, postgreSQl is used mainly die to its flexibility. PostgreSQL is designed for high volume and open-sourced. No licensing contraints restrict use, and the community thrives. With the hypothetical notion that we may at some juncture prefer to tweak the performance of postgreSQL, we have the ability to do so (unlike SQlite, for instance, which comes as is and is not open-sourced). The support community is large and accessible 24/7. This is helpful for a junior developer like myself. 
+For the database, postgreSQL is used mainly die to its flexibility. PostgreSQL is designed for high volume and open-sourced. No licensing contraints restrict use, and the community thrives. With the hypothetical notion that we may at some juncture prefer to tweak the performance of postgreSQL, we have the ability to do so (unlike SQlite, for instance, which comes as is and is not open-sourced). The support community is large and accessible 24/7. This is helpful for a junior developer like myself. 
 
 For the frontend API, I am using AngularJS. Because the scope of the project requires we create a single page application, Angular allows for two-way-data-binding (no refreashing of the page needed).
 
-Testing: this is probably the most challenging part for me. I've included Karma and Jasmine. These were chosen after researching the Angular documentation and reading about these frameworks therein. Karma serves as my test server. Jasmine provides a library to help write the tests. Currently, I'm still researching how to test functions with this tool, but I've managed to test variables within my controller. I'll also be trying to create my own tests in hope of reaching MVP.
+Testing: this is probably the most challenging part for me. I've included Karma and Jasmine. These were chosen after researching the Angular documentation and reading about these frameworks therein. Karma serves as my test server. Jasmine provides a library to help write the tests. Currently, I'm still researching how to test functions with this tool, but I've managed to test variables within my controller.
 
 ### How to use this application with a Mac:
 
@@ -18,13 +18,13 @@ $ node -v
 ```
 
 ```
-$npm -v
+$ npm -v
 ```
 
 If you dont, here's [a good tutorial](https://www.dyclassroom.com/howto-mac/how-to-install-nodejs-and-npm-on-mac-using-homebrew) using homebrew. 
 
 ```
-$npm install nodemon
+$ npm install nodemon
 ```
 
 ### Whoo hoo!
@@ -56,6 +56,10 @@ Upon clicking the edit option, your information will change to show inside a for
 ### Start Over
 If at any point you desire to begin anew, simple click "Start Over" to be brought back to the search view.
 
+## Testing
+---
+This was a good adventure for me. Using Karma and Jasmine, I have 6 tests in the app.spec.js file. NPM install should have installed the dependencies to make this run. You'll need to type `karma start` to start up the test server when youre cd'd into passenger_app_client. Currently, 5 tests pass. The last test is an http get request test that I'm just not figuring out at this point. I'm very open and happy to hear feedback about this. I feel like all the parts are in place...but my response.data isn't returning empty. Lines 75-85 are this test.
+
 ## Afterthoughts & Improvements
 ---
 1. I'd like to modify my schema:
@@ -65,5 +69,7 @@ If at any point you desire to begin anew, simple click "Start Over" to be brough
 This modification would allow for better search capabilities and would keep our database cleaner, I think.
 
 2. Adding CSS is always a plus.
+
+3. I really enjoyed learning about unit testing. It will be fruitful to implement this foresight and tool into future projects.
 
 
