@@ -16,10 +16,9 @@ app.controller('mainController', ['$scope', '$http', function($scope, $http){
    this.editingDone = true;
    this.info = {};
    this.notValid = false;
+   this.social;
 
-   // this.test = function(){
-   //    return "hello";
-   // };
+   
    ////////////////////////////////////////
    //search()
    ////////////////////////////////////////
@@ -27,12 +26,12 @@ app.controller('mainController', ['$scope', '$http', function($scope, $http){
       console.log(valid);
       if(valid){
          //remove all dashes from social
-         var social = this.info.social;
-         social = social.replace(/-/g, "");
+         this.social = this.info.social;
+         this.social = this.social.replace(/-/g, "");
 
          // Make search input name lowercase
-         var name = this.info.name;
-         name = name.toLowerCase();
+         this.name = this.info.name;
+         this.name = this.name.toLowerCase();
 
          //Send request
          $http({
@@ -40,13 +39,14 @@ app.controller('mainController', ['$scope', '$http', function($scope, $http){
             url: 'http://localhost:3000/users',
          }).then(function(response) {
             console.log(response);
+            $scope.appleTest = true;
             // Loop through users to find a match if one exists.
             for (var i = 0; i < response.data.users.length; i++) {
                var dbName = response.data.users[i].name;
                var dbSocial = response.data.users[i].social;
                dbSocial = dbSocial.replace(/-/g, "");
 
-               if(dbName.toLowerCase() == name && dbSocial.replace(/-/g, "") == social){
+               if(dbName.toLowerCase() == this.name && dbSocial.replace(/-/g, "") == this.social){
                   console.log(dbName);
                   console.log(name);
                   console.log("It's a match!");
@@ -62,12 +62,12 @@ app.controller('mainController', ['$scope', '$http', function($scope, $http){
                   this.info.address = response.data.users[i].address;
                   this.info.phone = response.data.users[i].phone;
                   return "yes";
-               } else if(i == response.data.users.length - 1 && dbSocial.replace(/-/g, "") != social){
+               } else if(i == response.data.users.length - 1 && dbSocial.replace(/-/g, "") != this.social){
                   // If no match, show registration form
                   console.log("not a match:(");
                   this.notRegistered = true;
                   this.searched = true;
-               } else if (i == response.data.users.length - 1 &&  dbSocial.replace(/-/g, "") == social) {
+               } else if (i == response.data.users.length - 1 &&  dbSocial.replace(/-/g, "") == this.social) {
                   console.log("2");
                   this.retry = true;
                }

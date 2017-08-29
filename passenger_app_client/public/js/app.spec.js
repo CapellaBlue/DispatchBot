@@ -1,16 +1,22 @@
 //my very first test! Testing the controller.
 
 describe('Testing mainController', function(){
-   var $controller;
+   var $scope, $controller;
 
    beforeEach(function(){
       module('passengerRegistration');
-      inject(function(_$controller_){
+      inject(function(_$controller_, _$httpBackend_){
+
          $controller = _$controller_;
+         $httpBackend = _$httpBackend_;
+         $httpBackend.whenGET('http://localhost:3000/users').respond(200);
+
       });
    });
-
+   //////////////////////////////////////
    //Test this.message
+   //////////////////////////////////////
+
    it('this.message should return \'angular functioning~\'', function(){
       var $scope = {};
       //
@@ -19,31 +25,40 @@ describe('Testing mainController', function(){
       expect(controller.message).toEqual('angular functioning~')
    });
 
-   //test this.search()
-   describe('controller.search', function(){
-      var $scope, controller;
-      //
-      beforeEach(function(){
-         $scope = {};
-         controller = $controller('mainController', { $scope: $scope });
-      })
+   //////////////////////////////////////
+   //test this.showEdit()
+   //////////////////////////////////////
 
-      it('removes hyphens from the social', function(){
-         controller.info.social = '123-12-1234';
-         controller.info.name = 'Amanda Test';
-         controller.search(true);
+   it('should return this.needToEdit as true', function(){
+      var $scope = {};
+      var controller = $controller('mainController', { $scope: $scope });
 
-         expect(controller.social).toEqual('123121234');
-      });
+      controller.showEdit();
+      expect(controller.needToEdit).toEqual(true);
    });
 
-   //test test()
-   // it('this.message should return \'hello\'', function(){
-   //    var $scope = {};
-   //    //
-   //    var controller = $controller('mainController', { $scope: $scope });
-   //
-   //    expect(controller.test()).toEqual('hello')
-   // });
+   it('should return this.displayInfo as false', function(){
+      var $scope = {};
+      var controller = $controller('mainController', { $scope: $scope });
+
+      controller.showEdit();
+      expect(controller.displayInfo).toEqual(false);
+   });
+
+   //////////////////////////////////////
+   //test this.search()
+   //////////////////////////////////////
+
+   it('removes hyphens from the social', function(){
+      var $scope = {};
+      var controller = $controller('mainController', { $scope: $scope });
+      controller.info.social = '123-12-1234';
+      controller.info.name = 'Amanda Test';
+      controller.search(true);
+      // $httpBackend.flush();
+
+      expect(controller.social).toEqual('123121234');
+   });
+   
 
 });
