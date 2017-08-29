@@ -19,7 +19,6 @@ describe('Testing mainController', function(){
 
    it('this.message should return \'angular functioning~\'', function(){
       var $scope = {};
-      //
       var controller = $controller('mainController', { $scope: $scope });
 
       expect(controller.message).toEqual('angular functioning~')
@@ -29,12 +28,14 @@ describe('Testing mainController', function(){
    //test this.showEdit()
    //////////////////////////////////////
 
-   it('should return this.needToEdit as true', function(){
+   it('should return this.needToEdit as true and this.displayInfo as false', function(){
       var $scope = {};
       var controller = $controller('mainController', { $scope: $scope });
 
       controller.showEdit();
+
       expect(controller.needToEdit).toEqual(true);
+      expect(controller.displayInfo).toEqual(false);
    });
 
    it('should return this.displayInfo as false', function(){
@@ -71,4 +72,17 @@ describe('Testing mainController', function(){
       expect(controller.name).toEqual('amanda test');
    });
 
+   it('should make a request', inject(function($http){
+      var $scope = {};
+      var controller = $controller('mainController', { $scope: $scope });
+      controller.info.social = '123-12-1234';
+      controller.info.name = 'Amanda Test';
+      $httpBackend.whenGET('http://localhost:3000/users').respond(200);
+      controller.search(true);
+
+      $httpBackend.flush();
+
+      expect(controller.response.status).toEqual( 200 );
+
+   }));
 });
